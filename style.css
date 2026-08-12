@@ -1465,3 +1465,439 @@ background:rgba(10,15,35,.55);
 }
 
 }
+
+/* ================================= */
+/* Ver.2.0 流れ星 */
+/* ================================= */
+
+#shooting-stars{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+pointer-events:none;
+
+overflow:hidden;
+
+z-index:5;
+
+}
+
+
+/* ---------- */
+/* 流れ星本体 */
+/* ---------- */
+
+.shooting-star{
+
+position:absolute;
+
+width:4px;
+
+height:4px;
+
+border-radius:50%;
+
+background:white;
+
+box-shadow:
+
+0 0 6px white,
+
+0 0 14px rgba(180,200,255,.9),
+
+0 0 25px rgba(140,170,255,.6);
+
+
+}
+
+
+/* ---------- */
+/* 流れ星の尾 */
+/* ---------- */
+
+.shooting-star::after{
+
+content:"";
+
+position:absolute;
+
+right:2px;
+
+top:50%;
+
+width:120px;
+
+height:2px;
+
+transform:
+
+translateY(-50%);
+
+background:
+
+linear-gradient(
+
+to left,
+
+rgba(255,255,255,.8),
+
+rgba(180,200,255,.4),
+
+transparent
+
+);
+
+}
+
+
+/* ---------- */
+/* アニメーション */
+/* ---------- */
+
+.shooting-star{
+
+animation:
+
+shootingStar 1.2s
+
+linear forwards;
+
+}
+
+
+@keyframes shootingStar{
+
+0%{
+
+opacity:0;
+
+transform:
+
+translate(0,0)
+
+rotate(145deg)
+
+scale(.8);
+
+}
+
+10%{
+
+opacity:1;
+
+}
+
+100%{
+
+opacity:0;
+
+transform:
+
+translate(-350px,350px)
+
+rotate(145deg)
+
+scale(1);
+
+}
+
+}
+
+/* ================================= */
+/* Ver.2.0 BGMボタン */
+/* ================================= */
+
+.bgm-toggle{
+
+position:fixed;
+
+left:20px;
+
+bottom:20px;
+
+z-index:1000;
+
+padding:12px 18px;
+
+border-radius:30px;
+
+background:
+
+rgba(10,15,35,.55);
+
+border:1px solid
+
+rgba(255,255,255,.15);
+
+backdrop-filter:blur(10px);
+
+-webkit-backdrop-filter:blur(10px);
+
+color:rgba(255,255,255,.85);
+
+font-size:14px;
+
+cursor:pointer;
+
+box-shadow:
+
+0 8px 25px
+
+rgba(0,0,0,.25);
+
+transition:
+
+background .3s,
+
+transform .3s,
+
+color .3s;
+
+}
+
+.bgm-toggle:hover{
+
+background:
+
+rgba(88,101,242,.75);
+
+color:white;
+
+transform:
+
+translateY(-3px);
+
+}
+
+
+/* ---------- */
+/* スマホ */
+/* ---------- */
+
+@media(max-width:768px){
+
+.bgm-toggle{
+
+left:12px;
+
+bottom:12px;
+
+padding:10px 14px;
+
+font-size:13px;
+
+}
+
+}
+
+/* ================================= */
+/* BGMコントロール */
+/* ================================= */
+
+.bgm-control{
+
+position:fixed;
+
+left:20px;
+
+bottom:20px;
+
+z-index:1000;
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:10px 14px;
+
+border-radius:30px;
+
+background:
+
+rgba(10,15,35,.55);
+
+border:1px solid
+
+rgba(255,255,255,.15);
+
+backdrop-filter:blur(10px);
+
+-webkit-backdrop-filter:blur(10px);
+
+box-shadow:
+
+0 8px 25px
+
+rgba(0,0,0,.25);
+
+}
+
+
+/* ---------- */
+/* BGMボタン */
+/* ---------- */
+
+.bgm-control .bgm-toggle{
+
+position:static;
+
+padding:5px 4px;
+
+border:none;
+
+background:transparent;
+
+box-shadow:none;
+
+}
+
+
+/* ---------- */
+/* スライダー */
+/* ---------- */
+
+.bgm-volume{
+
+width:100px;
+
+cursor:pointer;
+
+}
+
+
+/* ---------- */
+/* 音量表示 */
+/* ---------- */
+
+.bgm-volume-text{
+
+font-size:12px;
+
+color:
+
+rgba(255,255,255,.75);
+
+min-width:30px;
+
+}
+
+
+/* ---------- */
+/* スマホ */
+/* ---------- */
+
+@media(max-width:768px){
+
+.bgm-control{
+
+left:10px;
+
+bottom:10px;
+
+padding:8px 10px;
+
+gap:7px;
+
+}
+
+.bgm-volume{
+
+width:75px;
+
+}
+
+.bgm-volume-text{
+
+font-size:11px;
+
+}
+
+}
+
+/* ================================= */
+/* Ver.2.0 時間帯背景 */
+/* ================================= */
+
+#time-overlay{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
+z-index:0;
+
+background:rgba(0,0,0,0);
+
+transition:
+
+background 2s ease;
+
+}
+
+
+/* ================================= */
+/* 朝 */
+/* ================================= */
+
+body.time-morning #time-overlay{
+
+background:
+
+rgba(255,190,120,.18);
+
+}
+
+
+/* ================================= */
+/* 昼 */
+/* ================================= */
+
+body.time-day #time-overlay{
+
+background:
+
+rgba(255,255,220,.10);
+
+}
+
+
+/* ================================= */
+/* 夕方 */
+/* ================================= */
+
+body.time-evening #time-overlay{
+
+background:
+
+rgba(255,120,70,.25);
+
+}
+
+
+/* ================================= */
+/* 夜 */
+/* ================================= */
+
+body.time-night #time-overlay{
+
+background:
+
+rgba(20,30,90,.05);
+
+}

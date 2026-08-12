@@ -16,6 +16,28 @@ href="style.css">
 </head>
 
 <body>
+<!-- ==================== -->
+<!-- 時間帯背景レイヤー -->
+<!-- ==================== -->
+
+<div id="time-overlay"></div>
+
+
+<!-- ==================== -->
+<!-- 流れ星 -->
+<!-- ==================== -->
+
+<div id="shooting-stars"></div>
+
+<!-- ==================== -->
+<!-- BGM -->
+<!-- ==================== -->
+
+<audio
+id="bgm"
+src="bgm.mp3"
+loop>
+</audio>
 
 <div id="stars"></div>
 
@@ -268,6 +290,38 @@ Discordに参加する
 
 <script src="script.js"></script>
 
+<!-- ==================== -->
+<!-- BGMコントロール -->
+<!-- ==================== -->
+
+<div class="bgm-control">
+
+<button
+id="bgm-toggle"
+class="bgm-toggle">
+
+🎵 BGM OFF
+
+</button>
+
+<input
+type="range"
+id="bgm-volume"
+class="bgm-volume"
+min="0"
+max="1"
+step="0.01"
+value="0.1">
+
+<span
+id="bgm-volume-text"
+class="bgm-volume-text">
+
+10%
+
+</span>
+
+</div>
 </body>
 
 </html>
