@@ -25,27 +25,33 @@ reveal();
 
 // 星空
 
-const stars=document.getElementById("stars");
+const stars =
+document.getElementById("stars");
 
-for(let i=0;i<120;i++){
+if(stars){
 
-const star=document.createElement("div");
+    for(let i=0;i<120;i++){
 
-star.className="star";
+        const star =
+        document.createElement("div");
 
-star.style.left=Math.random()*100+"%";
+        star.className="star";
 
-star.style.top=Math.random()*100+"%";
+        star.style.left =
+        Math.random()*100+"%";
 
-star.style.animationDuration=
+        star.style.top =
+        Math.random()*100+"%";
 
-4+Math.random()*6+"s";
+        star.style.animationDuration =
+        4+Math.random()*6+"s";
 
-star.style.animationDelay=
+        star.style.animationDelay =
+        Math.random()*5+"s";
 
-Math.random()*5+"s";
+        stars.appendChild(star);
 
-stars.appendChild(star);
+    }
 
 }
 
@@ -63,36 +69,172 @@ window.open(img.src);
 
 });
 
-// ----------------
+// =================================
+// Ver.2.0 カルーセル
+// PCボタン + スマホスワイプ対応
+// =================================
 
-const track=document.querySelector(".carousel-track");
+const track =
+document.querySelector(".carousel-track");
 
-document.querySelector(".right").onclick=()=>{
+const rightButton =
+document.querySelector(".arrow.right");
 
-track.scrollBy({
+const leftButton =
+document.querySelector(".arrow.left");
 
-left:track.clientWidth,
 
-behavior:"smooth"
+if(track){
 
-});
+    /* ========================= */
+    /* PC：右ボタン */
+    /* ========================= */
 
-};
+    if(rightButton){
 
-document.querySelector(".left").onclick=()=>{
+        rightButton.addEventListener(
+            "click",
+            () => {
 
-track.scrollBy({
+                track.scrollBy({
 
-left:-track.clientWidth,
+                    left:
+                    track.clientWidth + 20,
 
-behavior:"smooth"
+                    behavior:"smooth"
 
-});
+                });
 
-};
+            }
+        );
 
-// ----------------
+    }
 
+
+    /* ========================= */
+    /* PC：左ボタン */
+    /* ========================= */
+
+    if(leftButton){
+
+        leftButton.addEventListener(
+            "click",
+            () => {
+
+                track.scrollBy({
+
+                    left:
+                    -(track.clientWidth + 20),
+
+                    behavior:"smooth"
+
+                });
+
+            }
+        );
+
+    }
+
+
+    /* ========================= */
+    /* スマホ：スワイプ */
+    /* ========================= */
+
+    let startX = 0;
+
+    let startY = 0;
+
+
+    track.addEventListener(
+        "touchstart",
+        (event) => {
+
+            startX =
+            event.touches[0].clientX;
+
+            startY =
+            event.touches[0].clientY;
+
+        },
+        {passive:true}
+    );
+
+
+    track.addEventListener(
+        "touchend",
+        (event) => {
+
+            const endX =
+            event.changedTouches[0].clientX;
+
+            const endY =
+            event.changedTouches[0].clientY;
+
+
+            const diffX =
+            endX - startX;
+
+            const diffY =
+            endY - startY;
+
+
+            /* 縦スクロールなら無視 */
+
+            if(
+                Math.abs(diffY) >
+                Math.abs(diffX)
+            ){
+
+                return;
+
+            }
+
+
+            /* 小さい動きは無視 */
+
+            if(Math.abs(diffX) < 40){
+
+                return;
+
+            }
+
+
+            /* 左スワイプ */
+
+            if(diffX < 0){
+
+                track.scrollBy({
+
+                    left:
+                    track.clientWidth + 20,
+
+                    behavior:"smooth"
+
+                });
+
+            }
+
+
+            /* 右スワイプ */
+
+            else{
+
+                track.scrollBy({
+
+                    left:
+                    -(track.clientWidth + 20),
+
+                    behavior:"smooth"
+
+                });
+
+            }
+
+        },
+        {passive:true}
+    );
+
+}
 const modal=document.createElement("div");
 
 modal.className="modal";
@@ -469,4 +611,126 @@ setInterval(
 
     60000
 
+);
+
+/* ================================= */
+/* Ver.2.0 スマホメニュー */
+/* ================================= */
+
+const mobileMenuButton =
+document.getElementById(
+    "mobile-menu-button"
+);
+
+const mobileMenuClose =
+document.getElementById(
+    "mobile-menu-close"
+);
+
+const mobileMenuOverlay =
+document.getElementById(
+    "mobile-menu-overlay"
+);
+
+
+/* メニューを開く */
+
+if(
+    mobileMenuButton &&
+    mobileMenuOverlay
+){
+
+    mobileMenuButton.addEventListener(
+        "click",
+        () => {
+
+            mobileMenuOverlay.style.display =
+            "block";
+
+            document.body.style.overflow =
+            "hidden";
+
+        }
+    );
+
+}
+
+
+/* メニューを閉じる */
+
+if(
+    mobileMenuClose &&
+    mobileMenuOverlay
+){
+
+    mobileMenuClose.addEventListener(
+        "click",
+        () => {
+
+            mobileMenuOverlay.style.display =
+            "none";
+
+            document.body.style.overflow =
+            "";
+
+        }
+    );
+
+}
+
+
+/* 背景をタップして閉じる */
+
+if(mobileMenuOverlay){
+
+    mobileMenuOverlay.addEventListener(
+        "click",
+        (event) => {
+
+            if(
+                event.target ===
+                mobileMenuOverlay
+            ){
+
+                mobileMenuOverlay.style.display =
+                "none";
+
+                document.body.style.overflow =
+                "";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* メニューリンクを押したら閉じる */
+
+document
+.querySelectorAll(
+    ".mobile-menu-links a"
+)
+.forEach(
+    (link) => {
+
+        link.addEventListener(
+            "click",
+            () => {
+
+                if(mobileMenuOverlay){
+
+                    mobileMenuOverlay.style.display =
+                    "none";
+
+                }
+
+                document.body.style.overflow =
+                "";
+
+            }
+        );
+
+    }
 );
