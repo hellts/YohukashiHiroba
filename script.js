@@ -69,90 +69,157 @@ window.open(img.src);
 
 });
 
-// =================================
-// Ver.2.0 カルーセル
-// PCボタン + スマホスワイプ対応
-// =================================
+/* ================================= */
+/* Ver.2.0 カルーセル完全版 */
+/* ================================= */
 
-const track =
-document.querySelector(".carousel-track");
+const carouselTrack =
+document.querySelector(
+    ".carousel-track"
+);
 
-const rightButton =
-document.querySelector(".arrow.right");
+const carouselImages =
+carouselTrack
+    ? carouselTrack.querySelectorAll("img")
+    : [];
 
-const leftButton =
-document.querySelector(".arrow.left");
+const carouselRight =
+document.querySelector(".right");
+
+const carouselLeft =
+document.querySelector(".left");
 
 
-if(track){
+let carouselIndex = 0;
 
-    /* ========================= */
-    /* PC：右ボタン */
-    /* ========================= */
 
-    if(rightButton){
+function moveCarousel(){
 
-        rightButton.addEventListener(
-            "click",
-            () => {
+    if(
+        !carouselTrack ||
+        carouselImages.length === 0
+    ){
 
-                track.scrollBy({
-
-                    left:
-                    track.clientWidth + 20,
-
-                    behavior:"smooth"
-
-                });
-
-            }
-        );
+        return;
 
     }
 
 
-    /* ========================= */
-    /* PC：左ボタン */
-    /* ========================= */
+    const target =
+    carouselImages[
+        carouselIndex
+    ];
 
-    if(leftButton){
 
-        leftButton.addEventListener(
-            "click",
-            () => {
+    carouselTrack.scrollTo({
 
-                track.scrollBy({
+        left:
+        target.offsetLeft,
 
-                    left:
-                    -(track.clientWidth + 20),
+        behavior:"smooth"
 
-                    behavior:"smooth"
+    });
 
-                });
+}
+
+
+/* ================================ */
+/* 右 */
+/* ================================ */
+
+if(carouselRight){
+
+    carouselRight.addEventListener(
+        "click",
+        () => {
+
+            if(
+                carouselImages.length === 0
+            ){
+
+                return;
 
             }
-        );
-
-    }
 
 
-    /* ========================= */
-    /* スマホ：スワイプ */
-    /* ========================= */
-
-    let startX = 0;
-
-    let startY = 0;
+            carouselIndex++;
 
 
-    track.addEventListener(
+            if(
+                carouselIndex >=
+                carouselImages.length
+            ){
+
+                carouselIndex = 0;
+
+            }
+
+
+            moveCarousel();
+
+        }
+    );
+
+}
+
+
+/* ================================ */
+/* 左 */
+/* ================================ */
+
+if(carouselLeft){
+
+    carouselLeft.addEventListener(
+        "click",
+        () => {
+
+            if(
+                carouselImages.length === 0
+            ){
+
+                return;
+
+            }
+
+
+            carouselIndex--;
+
+
+            if(carouselIndex < 0){
+
+                carouselIndex =
+                carouselImages.length - 1;
+
+            }
+
+
+            moveCarousel();
+
+        }
+    );
+
+}
+
+
+/* ================================ */
+/* スマホ スワイプ */
+/* ================================ */
+
+if(carouselTrack){
+
+    let touchStartX = 0;
+
+    let touchStartY = 0;
+
+
+    carouselTrack.addEventListener(
         "touchstart",
         (event) => {
 
-            startX =
+            touchStartX =
             event.touches[0].clientX;
 
-            startY =
+            touchStartY =
             event.touches[0].clientY;
 
         },
@@ -160,22 +227,22 @@ if(track){
     );
 
 
-    track.addEventListener(
+    carouselTrack.addEventListener(
         "touchend",
         (event) => {
 
-            const endX =
+            const touchEndX =
             event.changedTouches[0].clientX;
 
-            const endY =
+            const touchEndY =
             event.changedTouches[0].clientY;
 
 
             const diffX =
-            endX - startX;
+            touchEndX - touchStartX;
 
             const diffY =
-            endY - startY;
+            touchEndY - touchStartY;
 
 
             /* 縦スクロールなら無視 */
@@ -190,45 +257,47 @@ if(track){
             }
 
 
-            /* 小さい動きは無視 */
+            /* 小さな動きは無視 */
 
-            if(Math.abs(diffX) < 40){
+            if(
+                Math.abs(diffX) < 40
+            ){
 
                 return;
 
             }
 
 
-            /* 左スワイプ */
-
             if(diffX < 0){
 
-                track.scrollBy({
+                carouselIndex++;
 
-                    left:
-                    track.clientWidth + 20,
+                if(
+                    carouselIndex >=
+                    carouselImages.length
+                ){
 
-                    behavior:"smooth"
+                    carouselIndex = 0;
 
-                });
+                }
 
             }
-
-
-            /* 右スワイプ */
 
             else{
 
-                track.scrollBy({
+                carouselIndex--;
 
-                    left:
-                    -(track.clientWidth + 20),
+                if(carouselIndex < 0){
 
-                    behavior:"smooth"
+                    carouselIndex =
+                    carouselImages.length - 1;
 
-                });
+                }
 
             }
+
+
+            moveCarousel();
 
         },
         {passive:true}
@@ -614,123 +683,81 @@ setInterval(
 );
 
 /* ================================= */
-/* Ver.2.0 スマホメニュー */
+/* Ver.2.0 スマホナビ */
 /* ================================= */
 
-const mobileMenuButton =
+const mobileNavButton =
 document.getElementById(
-    "mobile-menu-button"
+    "mobile-nav-button"
 );
 
-const mobileMenuClose =
-document.getElementById(
-    "mobile-menu-close"
+const navLinks =
+document.querySelector(
+    ".nav-links"
 );
 
-const mobileMenuOverlay =
-document.getElementById(
-    "mobile-menu-overlay"
-);
-
-
-/* メニューを開く */
 
 if(
-    mobileMenuButton &&
-    mobileMenuOverlay
+    mobileNavButton &&
+    navLinks
 ){
 
-    mobileMenuButton.addEventListener(
+    mobileNavButton.addEventListener(
         "click",
         () => {
 
-            mobileMenuOverlay.style.display =
-            "block";
-
-            document.body.style.overflow =
-            "hidden";
-
-        }
-    );
-
-}
+            navLinks.classList.toggle(
+                "mobile-open"
+            );
 
 
-/* メニューを閉じる */
+            const isOpen =
+            navLinks.classList.contains(
+                "mobile-open"
+            );
 
-if(
-    mobileMenuClose &&
-    mobileMenuOverlay
-){
 
-    mobileMenuClose.addEventListener(
-        "click",
-        () => {
+            mobileNavButton.setAttribute(
+                "aria-expanded",
+                isOpen
+            );
 
-            mobileMenuOverlay.style.display =
-            "none";
 
-            document.body.style.overflow =
-            "";
+            mobileNavButton.textContent =
+            isOpen ? "×" : "☰";
 
         }
     );
 
-}
 
+    /* リンクを押したら閉じる */
 
-/* 背景をタップして閉じる */
+    navLinks
+    .querySelectorAll("a")
+    .forEach(
+        (link) => {
 
-if(mobileMenuOverlay){
+            link.addEventListener(
+                "click",
+                () => {
 
-    mobileMenuOverlay.addEventListener(
-        "click",
-        (event) => {
+                    navLinks.classList.remove(
+                        "mobile-open"
+                    );
 
-            if(
-                event.target ===
-                mobileMenuOverlay
-            ){
+                    mobileNavButton.textContent =
+                    "☰";
 
-                mobileMenuOverlay.style.display =
-                "none";
-
-                document.body.style.overflow =
-                "";
-
-            }
-
-        }
-    );
-
-}
-
-
-/* メニューリンクを押したら閉じる */
-
-document
-.querySelectorAll(
-    ".mobile-menu-links a"
-)
-.forEach(
-    (link) => {
-
-        link.addEventListener(
-            "click",
-            () => {
-
-                if(mobileMenuOverlay){
-
-                    mobileMenuOverlay.style.display =
-                    "none";
+                    mobileNavButton.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
 
                 }
+            );
 
-                document.body.style.overflow =
-                "";
+        }
+    );
 
-            }
-        );
+}
 
-    }
-);

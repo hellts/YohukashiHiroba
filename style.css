@@ -553,24 +553,25 @@ margin-top:40px;
 
 .carousel-track{
 
-overflow:hidden;
+overflow-x:auto;
+
+    overflow-y:hidden;
 
 display:flex;
 
-scroll-behavior:smooth;
-
-gap:20px;
-
 flex:1;
 
-    scroll-snap-type:
-    x mandatory;
+    scroll-behavior:smooth;
 
     scrollbar-width:none;
 
     -ms-overflow-style:none;
 
+    scroll-snap-type:
+    x mandatory;
+
 }
+
 
 .carousel-track::-webkit-scrollbar{
 
@@ -578,23 +579,19 @@ flex:1;
 
 }
 
+
 .carousel-track img{
 
-flex:0 0 100%;
+    flex:
+    0 0 100%;
 
-width:100%;
+    width:100%;
 
-min-width:100%;
+    min-width:100%;
 
-border-radius:20px;
+    scroll-snap-align:start;
 
-cursor:pointer;
-
-scroll-snap-align:start;
-
-box-shadow:
-
-0 10px 30px rgba(0,0,0,.3);
+    border-radius:20px;
 
 }
 
@@ -2342,32 +2339,103 @@ section p{
     rgba(255,255,255,.08);
 
 }
+
+
 /* ================================= */
-/* スマホメニュー */
+/* Ver.2.0 ナビゲーション改善 */
 /* ================================= */
 
 
 /* ================================ */
-/* メニューボタン */
+/* PCナビ */
 /* ================================ */
 
-.mobile-menu-button{
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:6px;
+
+    border-radius:16px;
+
+    background:
+    rgba(10,15,35,.45);
+
+    border:
+    1px solid
+    rgba(255,255,255,.16);
+
+    backdrop-filter:
+    blur(12px);
+
+    -webkit-backdrop-filter:
+    blur(12px);
+
+    box-shadow:
+    0 8px 25px
+    rgba(0,0,0,.25);
+
+}
+
+
+.nav-links a{
+
+    display:block;
+
+    padding:
+    9px 15px;
+
+    border-radius:11px;
+
+    color:
+    rgba(255,255,255,.82);
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:
+    background .25s ease,
+    color .25s ease,
+    transform .25s ease;
+
+}
+
+
+.nav-links a:hover{
+
+    background:
+    rgba(255,255,255,.12);
+
+    color:white;
+
+    transform:
+    translateY(-1px);
+
+}
+
+
+/* ================================ */
+/* スマホボタン */
+/* ================================ */
+
+.mobile-nav-button{
 
     display:none;
-
-    position:fixed;
-
-    top:15px;
-
-    right:15px;
-
-    z-index:2000;
 
     width:46px;
 
     height:46px;
 
-    border-radius:50%;
+    padding:0;
+
+    border-radius:14px;
 
     border:
     1px solid
@@ -2378,7 +2446,7 @@ section p{
 
     color:white;
 
-    font-size:22px;
+    font-size:23px;
 
     cursor:pointer;
 
@@ -2392,214 +2460,84 @@ section p{
     0 8px 25px
     rgba(0,0,0,.25);
 
-    transition:
-    transform .25s ease,
-    background .25s ease;
-
 }
 
-
-.mobile-menu-button:hover{
-
-    background:
-    rgba(255,255,255,.15);
-
-    transform:
-    scale(1.05);
-
-}
-
-
-/* ================================ */
-/* 背景オーバーレイ */
-/* ================================ */
-
-.mobile-menu-overlay{
-
-    display:none;
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:1900;
-
-    background:
-    rgba(0,0,0,.35);
-
-    backdrop-filter:
-    blur(3px);
-
-    -webkit-backdrop-filter:
-    blur(3px);
-
-}
-
-
-/* ================================ */
-/* メニュー本体 */
-/* ================================ */
-
-.mobile-menu{
-
-    position:absolute;
-
-    top:0;
-
-    right:0;
-
-    width:min(82vw,340px);
-
-    height:100%;
-
-    padding:
-    80px 25px 30px;
-
-    background:
-    rgba(10,15,35,.88);
-
-    border-left:
-    1px solid
-    rgba(255,255,255,.12);
-
-    backdrop-filter:
-    blur(18px);
-
-    -webkit-backdrop-filter:
-    blur(18px);
-
-    box-shadow:
-    -10px 0 35px
-    rgba(0,0,0,.3);
-
-}
-
-
-/* ================================ */
-/* 閉じるボタン */
-/* ================================ */
-
-.mobile-menu-close{
-
-    position:absolute;
-
-    top:17px;
-
-    right:17px;
-
-    width:44px;
-
-    height:44px;
-
-    border-radius:50%;
-
-    border:
-    1px solid
-    rgba(255,255,255,.15);
-
-    background:
-    rgba(255,255,255,.08);
-
-    color:white;
-
-    font-size:28px;
-
-    cursor:pointer;
-
-}
-
-
-/* ================================ */
-/* メニュータイトル */
-/* ================================ */
-
-.mobile-menu-title{
-
-    margin-bottom:35px;
-
-    color:white;
-
-    font-size:20px;
-
-    font-weight:700;
-
-}
-
-
-/* ================================ */
-/* メニューリンク */
-/* ================================ */
-
-.mobile-menu-links{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-
-}
-
-
-.mobile-menu-links a{
-
-    display:block;
-
-    padding:
-    16px 18px;
-
-    border-radius:15px;
-
-    color:
-    rgba(255,255,255,.85);
-
-    text-decoration:none;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    background:
-    rgba(255,255,255,.06);
-
-    border:
-    1px solid
-    rgba(255,255,255,.08);
-
-    transition:
-    background .2s ease,
-    transform .2s ease;
-
-}
-
-
-.mobile-menu-links a:hover{
-
-    background:
-    rgba(255,255,255,.13);
-
-    transform:
-    translateX(-3px);
-
-}
 /* ================================= */
-/* スマホ時のみナビゲーション変更 */
+/* スマホナビゲーション */
 /* ================================= */
 
 @media(max-width:768px){
 
-    /* PCナビを隠す */
+    .navbar{
 
-    .nav{
-
-        display:none;
+        padding:
+        12px 16px;
 
     }
 
 
-    /* ハンバーガーボタンを表示 */
+    .nav-links{
 
-    .mobile-menu-button{
+        display:none;
+
+        position:absolute;
+
+        top:70px;
+
+        right:16px;
+
+        width:220px;
+
+        padding:10px;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+        gap:5px;
+
+        border-radius:18px;
+
+        background:
+        rgba(10,15,35,.88);
+
+        border:
+        1px solid
+        rgba(255,255,255,.16);
+
+        backdrop-filter:
+        blur(18px);
+
+        -webkit-backdrop-filter:
+        blur(18px);
+
+        box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.35);
+
+    }
+
+
+    .nav-links.mobile-open{
+
+        display:flex;
+
+    }
+
+
+    .nav-links a{
+
+        padding:
+        14px 16px;
+
+        font-size:15px;
+
+        border-radius:12px;
+
+    }
+
+
+    .mobile-nav-button{
 
         display:flex;
 
