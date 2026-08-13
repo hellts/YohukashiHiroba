@@ -1,0 +1,17 @@
+{
+    "name": "夜更かし広場",
+    "short_name": "夜更かし広場",
+    "description": "深夜でも誰かがいるDiscordサーバー、夜更かし広場。",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#050816",
+    "theme_color": "#050816",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
